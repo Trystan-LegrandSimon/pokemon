@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+import math
 
 class MenuPokemon:
     def __init__(self):
@@ -13,13 +14,17 @@ class MenuPokemon:
         # chemin d'accès au fond du menu
         dossier_assets = "assets/assets_menu"
         assets_file = "backgmenu.png"
+        assets_titre = "pokemontitre.png"
         chemin_image = os.path.join(dossier_assets, assets_file)
+        chemin_titre = os.path.join(dossier_assets, assets_titre)
         # gestion d'erreur 
         if not os.path.exists(chemin_image):
             print(f"Erreur : Le fichier image '{assets_file}' n'existe pas dans le dossier '{dossier_assets}'.")
             sys.exit()
 
         self.fond = pygame.image.load(chemin_image).convert()
+        self.titre = pygame.image.load(chemin_titre).convert_alpha()
+        self.bordure_couleur_phase = 0
 
     def afficher_texte(self, texte, x, y, couleur):
         texte_surface = self.police.render(texte, True, couleur)
@@ -31,19 +36,39 @@ class MenuPokemon:
         bouton_hauteur = 30
         espacement = 20
 
-        bouton1_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 - bouton_largeur - espacement, 400, bouton_largeur, bouton_hauteur)
-        bouton2_rect = pygame.Rect((self.largeur - bouton_largeur) // 2, 400, bouton_largeur, bouton_hauteur)
-        bouton3_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 + bouton_largeur + espacement, 400, bouton_largeur, bouton_hauteur)
+        for i in range(3):
+            bouton_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 + (i - 1) * (bouton_largeur + espacement), 425, bouton_largeur, bouton_hauteur)
+            pygame.draw.rect(self.fenetre, (255, 0, 0), bouton_rect)
 
-        pygame.draw.rect(self.fenetre, (255, 0, 0), bouton1_rect)
-        pygame.draw.rect(self.fenetre, (255, 0, 0), bouton2_rect)
-        pygame.draw.rect(self.fenetre, (255, 0, 0), bouton3_rect)
+            bordure_x = bouton_rect.x - 5
+            bordure_y = bouton_rect.y - 5
+            bordure_largeur = bouton_largeur + 10
+            bordure_hauteur = bouton_hauteur + 10
 
-        self.afficher_texte("Lancer une partie", bouton1_rect.centerx, bouton1_rect.centery, (255, 255, 255))
-        self.afficher_texte("Ajouter un Pokémon", bouton2_rect.centerx, bouton2_rect.centery, (255, 255, 255))
-        self.afficher_texte("Accéder au Pokédex", bouton3_rect.centerx, bouton3_rect.centery, (255, 255, 255))
+            r = int(127 * math.sin(self.bordure_couleur_phase) + 128)
+            g = int(127 * math.sin(self.bordure_couleur_phase + 2.0) + 128)
+            b = int(127 * math.sin(self.bordure_couleur_phase + 4.0) + 128)
+
+            pygame.draw.rect(self.fenetre, (r, g, b), (bordure_x, bordure_y, bordure_largeur, bordure_hauteur), 5)
+
+            texte = ""
+            if i == 0:
+                texte = "Lancer une partie"
+            elif i == 1:
+                texte = "Ajouter un Pokémon"
+            elif i == 2:
+                texte = "Accéder au Pokédex"
+
+            self.afficher_texte(texte, bouton_rect.centerx, bouton_rect.centery, (255, 255, 255))
+
+        self.bordure_couleur_phase += 0.05
+
+    def afficher_titre(self):
+        titre_rect = self.titre.get_rect(center=(self.largeur // 2, 100))
+        self.fenetre.blit(self.titre, titre_rect)
 
     def executer(self):
+        clock = pygame.time.Clock()
         while True:
             for evenement in pygame.event.get():
                 if evenement.type == pygame.QUIT:
@@ -56,20 +81,9 @@ class MenuPokemon:
             self.fenetre.fill((255, 255, 255))
             self.fenetre.blit(self.fond, (0, 0))
             self.afficher_boutons()
+            self.afficher_titre()
             pygame.display.flip()
-            pygame.time.Clock().tick(60)
-
-    def verifier_clic(self, x, y):
-        bouton1_rect = pygame.Rect((self.largeur - 150) // 2 - 150 - 20, 400, 150, 30)
-        bouton2_rect = pygame.Rect((self.largeur - 150) // 2 - 20, 400, 150, 30)
-        bouton3_rect = pygame.Rect((self.largeur - 150) // 2 + 150 + 20 - 150, 400, 150, 30)
-
-        if bouton1_rect.collidepoint(x, y):
-            print("Lancer une partie")
-        elif bouton2_rect.collidepoint(x, y):
-            print("Ajouter un Pokémon")
-        elif bouton3_rect.collidepoint(x, y):
-            print("Accéder au Pokédex")
+            clock.tick(60)
 
 if __name__ == "__main__":
     menu = MenuPokemon()
