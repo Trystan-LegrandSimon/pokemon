@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "asset" : "../../assets/assets_pokemon/bulbizarre.png",
         "nom": "Bulbizarre",
         "pv": 45,
         "niveau": 5,
@@ -11,6 +12,7 @@
     },
     {
         "id": 2,
+        "asset" : "../../assets/assets_pokemon/herbizarre.png",
         "nom": "Herbizarre",
         "pv": 60,
         "niveau": 16,
@@ -21,6 +23,7 @@
     },
     {
         "id": 3,
+        "asset" : "../../assets/assets_pokemon/florizarre.png",
         "nom": "Florizarre",
         "pv": 80,
         "niveau": 32,
