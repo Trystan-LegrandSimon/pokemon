@@ -10,22 +10,15 @@ class MenuPokemon:
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
         pygame.display.set_caption("Menu Pokémon")
         self.police = pygame.font.Font(None, 24)
-        
-        # Définissez le chemin du dossier des assets
+        # chemin d'accès au fond du menu
         dossier_assets = "assets/assets_menu"
-
-        # Définissez le nom du fichier image
         assets_file = "backgmenu.png"
-
-        # Construisez le chemin complet du fichier image
         chemin_image = os.path.join(dossier_assets, assets_file)
-
-        # Vérifiez si le fichier image existe
+        # gestion d'erreur 
         if not os.path.exists(chemin_image):
             print(f"Erreur : Le fichier image '{assets_file}' n'existe pas dans le dossier '{dossier_assets}'.")
             sys.exit()
 
-        # Chargez l'image du fond d'écran
         self.fond = pygame.image.load(chemin_image).convert()
 
     def afficher_texte(self, texte, x, y, couleur):
