@@ -28,7 +28,7 @@ class Pokemon:
         print(f"Nom : {str(self.nom)}")
         print(f"PV : {str(self.pv)}")
         print(f"Niveau : {str(self.niveau)}")
-        print(f"Puissance d'attaque : {str(self.puissance_attaque)}")
+        print(f"Puissance d'Attaque : {str(self.puissance_attaque)}")
         print(f"Défense : {str(self.defense)}")
         print(f"Type : {str(self.type)}")
         print(f"Évolution : {str(self.evolution)}")
