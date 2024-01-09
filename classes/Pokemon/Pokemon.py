@@ -1,9 +1,17 @@
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
 import json
 import os
 
+# Importer le fichier de données JSON
+dossier_data = "classes/data/"
+fichier_data = "pokemon_data.json"
+chemin_data = os.path.join(dossier_data, fichier_data)
+
 class Pokemon:
     
-    def __init__(self, id, asset, nom, pv, niveau, puissance_attaque, defense, types, evolution):
+    def __init__(self, id, asset, nom, pv, niveau, puissance_attaque, defense, type, evolution):
         self.id = id
         self.asset = asset
         self.nom = nom
@@ -11,39 +19,23 @@ class Pokemon:
         self.niveau = niveau
         self.puissance_attaque = puissance_attaque
         self.defense = defense
-        self.types = types
+        self.type = type
         self.evolution = evolution
         
     def infos(self):
-        print("id: ", self.id)
-        print("asset: ", self.asset)
-        print("nom: ", self.nom)
-        print("pv: ", self.pv)
-        print("niveau: ", self.niveau)
-        print("puissance_attaque: ", self.puissance_attaque)
-        print("defense: ", self.defense)
-        print("types: ", self.types)
-        print("evolution: ", self.evolution)
-        print("\n")
+        print(f"id : {str(self.id)}")
+        print(f"Asset : {str(self.asset)}")
+        print(f"Nom : {str(self.nom)}")
+        print(f"PV : {str(self.pv)}")
+        print(f"Niveau : {str(self.niveau)}")
+        print(f"Puissance d'attaque : {str(self.puissance_attaque)}")
+        print(f"Défense : {str(self.defense)}")
+        print(f"Type : {str(self.type)}")
+        print(f"Évolution : {str(self.evolution)}")
 
-# Chemin vers le fichier JSON
-data = "classes/data/pokemon_data.json"
+# Charger les données depuis le fichier JSON
+with open(chemin_data, "r") as fichier_pokemon:
+    donnees_pokemon = json.load(fichier_pokemon)
 
-# Ouvrir le fichier JSON
-with open(data) as mon_fichier:
-    datae = json.load(mon_fichier)
-
-    # Parcourir la liste des Pokémon et afficher leurs informations
-    for pokemon_data in datae:
-        pokemon_instance = Pokemon(
-            pokemon_data['id'],
-            pokemon_data.get('asset', ''),
-            pokemon_data['nom'],
-            pokemon_data['pv'],
-            pokemon_data['niveau'],
-            pokemon_data['puissance_attaque'],
-            pokemon_data['defense'],
-            pokemon_data['types'],
-            pokemon_data.get('evolution', '')
-        )
-        pokemon_instance.infos()
+# Afficher les données chargées
+print(donnees_pokemon)
