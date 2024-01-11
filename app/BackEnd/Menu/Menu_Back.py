@@ -9,7 +9,7 @@ class Scene:
         self.hauteur = 825
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
         pygame.display.set_caption("pokégame !")
-        dossier_assets = "assets/assets_scene"
+        dossier_assets = "app/assets/assets_scene"
         assets_back = "backcombat.png"
         chemin_back = os.path.join(dossier_assets, assets_back)
         self.fond = pygame.image.load(chemin_back).convert()
