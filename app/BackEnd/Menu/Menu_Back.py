@@ -10,7 +10,7 @@ class Menu:
         self.largeur = 800
         self.hauteur = 600
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
-        pygame.display.set_caption("Menu Pokémon")
+        pygame.display.set_caption("Menu")
         self.police = pygame.font.Font(None, 24)
         # chemin d'accès au fond du menu
         dossier_assets = "app/assets/assets_menu"

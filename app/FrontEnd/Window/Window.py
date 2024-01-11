@@ -14,19 +14,29 @@ largeur, hauteur = 800, 600
 
 # Création de la fenêtre
 ecran = pygame.display.set_mode((largeur, hauteur))
-pygame.display.set_caption("Fenêtre Stylée")
+pygame.display.set_caption("Arène Pokémon")
 
 # Chargement de l'image de fond
-fond = pygame.image.load('app/assets/assets_menu/backgmenu.png')  # Remplacez 'background_image.jpg' par le chemin de votre image
+fond = pygame.image.load('app/assets/assets_scene/backcombat.png')
 fond = pygame.transform.scale(fond, (largeur, hauteur))
 
-# Positionnement des boutons
-bouton_largeur, bouton_hauteur = 200, 50
-espace_entre_boutons = 10
+# Classe Pokémon
+class Pokemon(pygame.sprite.Sprite):
+    def __init__(self, image, x, y, largeur, hauteur):
+        super().__init__()
+        self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image, (largeur, hauteur))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)  # Utiliser center au lieu de x, y
 
-# Coordonnées du premier bouton (centré horizontalement)
-x_bouton1 = (largeur - bouton_largeur) // 2
-y_bouton1 = (hauteur - (3 * bouton_hauteur + 2 * espace_entre_boutons)) // 2
+    def afficher(self):
+        ecran.blit(self.image, self.rect)
+
+# Taille réduite du Pokémon
+pokemon_largeur, pokemon_hauteur = 200, 200
+
+# Création d'un Pokémon centré dans la fenêtre avec une taille réduite
+pokemon = Pokemon('app/assets/assets_pokemon/bulbizarre.png', largeur // 3, hauteur // 5, pokemon_largeur, pokemon_hauteur)
 
 # Boucle principale
 while True:
@@ -35,13 +45,16 @@ while True:
             pygame.quit()
             sys.exit()
 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Clic gauche
+            # Vérifier si le clic est sur le Pokémon
+            if pokemon.rect.collidepoint(event.pos):
+                print("Pokémon cliqué!")
+
     # Dessiner l'image de fond
     ecran.blit(fond, (0, 0))
 
-    # Dessiner les boutons
-    pygame.draw.rect(ecran, BLANC, (x_bouton1, y_bouton1, bouton_largeur, bouton_hauteur))
-    pygame.draw.rect(ecran, BLANC, (x_bouton1, y_bouton1 + bouton_hauteur + espace_entre_boutons, bouton_largeur, bouton_hauteur))
-    pygame.draw.rect(ecran, BLANC, (x_bouton1, y_bouton1 + 2 * (bouton_hauteur + espace_entre_boutons), bouton_largeur, bouton_hauteur))
+    # Dessiner le Pokémon
+    pokemon.afficher()
 
     # Mise à jour de l'affichage
     pygame.display.flip()
