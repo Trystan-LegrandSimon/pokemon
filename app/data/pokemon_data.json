@@ -1,222 +1,227 @@
-[
-    {
-        "id": 1,
-        "asset" : "../../assets/assets_pokemon/bulbizarre.png",
-        "nom": "Bulbizarre",
-        "pv": 45,
-        "niveau": 5,
-        "puissance_attaque": 49,
-        "defense": 49,
-        "types": ["Plante", "Poison"],
-        "evolution": "Herbizarre"
-    },
-    {
-        "id": 2,
-        "asset" : "../../assets/assets_pokemon/herbizarre.png",
-        "nom": "Herbizarre",
-        "pv": 60,
-        "niveau": 16,
-        "puissance_attaque": 62,
-        "defense": 63,
-        "types": ["Plante", "Poison"],
-        "evolution": "Florizarre"
-    },
-    {
-        "id": 3,
-        "asset" : "../../assets/assets_pokemon/florizarre.png",
-        "nom": "Florizarre",
-        "pv": 80,
-        "niveau": 32,
-        "puissance_attaque": 82,
-        "defense": 83,
-        "types": ["Plante", "Poison"],
-        "evolution": null
-    },
-    {
-        "id": 4,
-        "asset" : "../../assets/assets_pokemon/salameche.png",
-        "nom": "Salamèche",
-        "pv": 39,
-        "niveau": 5,
-        "puissance_attaque": 52,
-        "defense": 43,
-        "types": ["Feu"],
-        "evolution": "Reptincel"
-    },
-    {
-        "id": 5,
-        "asset" : "../../assets/assets_pokemon/reptincel.png",
-        "nom": "Reptincel",
-        "pv": 58,
-        "niveau": 16,
-        "puissance_attaque": 64,
-        "defense": 58,
-        "types": ["Feu"],
-        "evolution": "Dracaufeu"
-    },
-    {
-        "id": 6,
-        "asset" : "../../assets/assets_pokemon/dracaufeu.png",
-        "nom": "Dracaufeu",
-        "pv": 78,
-        "niveau": 36,
-        "puissance_attaque": 84,
-        "defense": 78,
-        "types": ["Feu", "Vol"],
-        "evolution": null
-    },
-    {
-        "id": 7,
-        "asset" : "../../assets/assets_pokemon/carapuce.png",
-        "nom": "Carapuce",
-        "pv": 44,
-        "niveau": 5,
-        "puissance_attaque": 48,
-        "defense": 65,
-        "types": ["Eau"],
-        "evolution": "Carabaffe"
-    },
-    {
-        "id": 8,
-        "asset" : "../../assets/assets_pokemon/carabaffe.png",
-        "nom": "Carabaffe",
-        "pv": 59,
-        "niveau": 16,
-        "puissance_attaque": 63,
-        "defense": 80,
-        "types": ["Eau"],
-        "evolution": "Tortank"
-    },
-    {
-        "id": 9,
-        "nom": "Tortank",
-        "asset" : "../../assets/assets_pokemon/tortank.png",
-        "pv": 79,
-        "niveau": 36,
-        "puissance_attaque": 83,
-        "defense": 100,
-        "types": ["Eau"],
-        "evolution": null
-    },
-    {
-        "id": 10,
-        "asset" : "../../assets/assets_pokemon/pikachu.png",
-        "nom": "Pikachu",
-        "pv": 35,
-        "niveau": 5,
-        "puissance_attaque": 55,
-        "defense": 40,
-        "types": ["Électrique"],
-        "evolution": "Raichu"
-    },
-    {
-        "id": 11,
-        "asset" : "../../assets/assets_pokemon/raichu.png",
-        "nom": "Raichu",
-        "pv": 60,
-        "niveau": null,
-        "puissance_attaque": 90,
-        "defense": 55,
-        "types": ["Électrique"],
-        "evolution": null
-    },
-    {
-        "id": 12,
-        "asset" : "../../assets/assets_pokemon/mewtwo.png",
-        "nom": "Mewtwo",
-        "pv": 106,
-        "niveau": null,
-        "puissance_attaque": 110,
-        "defense": 90,
-        "types": ["Psychique"],
-        "evolution": null
-    },
-    {
-        "id": 13,
-        "asset" : "../../assets/assets_pokemon/mew.png",
-        "nom": "Mew",
-        "pv": 100,
-        "niveau": null,
-        "puissance_attaque": 100,
-        "defense": 100,
-        "types": ["Psychique"],
-        "evolution": null
-    },
-    {
-        "id": 14,
-        "asset" : "../../assets/assets_pokemon/jigglypuff.png",
-        "nom": "Jigglypuff",
-        "pv": 115,
-        "niveau": null,
-        "puissance_attaque": 45,
-        "defense": 20,
-        "types": ["Normal", "Fée"],
-        "evolution": "Wigglytuff"
-    },
-    {
-        "id": 15,
-        "asset" : "../../assets/assets_pokemon/wigglytuff.png",
-        "nom": "Wigglytuff",
-        "pv": 140,
-        "niveau": null,
-        "puissance_attaque": 70,
-        "defense": 45,
-        "types": ["Normal", "Fée"],
-        "evolution": null
-    },
-    {
-        "id": 16,
-        "asset" : "../../assets/assets_pokemon/grenousse.png",
-        "nom": "Grenousse",
-        "pv": 41,
-        "niveau": 5,
-        "puissance_attaque": 56,
-        "defense": 40,
-        "types": ["Eau"],
-        "evolution": "Croâporal"
-    },
-    {
-        "id": 17,
-        "asset" : "../../assets/assets_pokemon/croaporal.png",
-        "nom": "Croâporal",
-        "pv": 54,
-        "niveau": 16,
-        "puissance_attaque": 63,
-        "defense": 52,
-        "types": ["Eau"],
-        "evolution": "Amphinobi"
-    },
-    {
-        "id": 18,
-        "asset" : "../../assets/assets_pokemon/amphinobi.png",
-        "nom": "Amphinobi",
-        "pv": 72,
-        "niveau": 36,
-        "puissance_attaque": 95,
-        "defense": 67,
-        "types": ["Eau", "Ténèbres"],
-        "evolution": null
-    },
-    {
-        "id": 19,
-        "asset" : "../../assets/assets_pokemon/rondoudou.png",
-        "nom": "Rondoudou",
-        "pv": 115,
-        "niveau": null,
-        "puissance_attaque": 70,
-        "defense": 65,
-        "types": ["Normal", "Fée"],
-        "evolution": "Grodoudou"
-    },
-    {
-        "id": 20,
-        "asset" : "../../assets/assets_pokemon/grodoudou.png",
-        "nom": "Grodoudou",
-        "pv": 140,
-        "niveau": null,
-        "puissance_attaque": 85,
-        "defense": 90,
-        "types": ["Normal", "Fée"],
-        "evolution": null
-    }
-]
+{
+    "pokemon": [
+        {
+            "id": 1,
+            "asset" : "../../assets/assets_pokemon/bulbizarre.png",
+            "nom": "Bulbizarre",
+            "pv": 45,
+            "niveau": 5,
+            "puissance_attaque": 49,
+            "defense": 49,
+            "types": ["Plante", "Poison"],
+            "evolution": "Herbizarre"
+        },
+        {
+            "id": 2,
+            "asset" : "../../assets/assets_pokemon/herbizarre.png",
+            "nom": "Herbizarre",
+            "pv": 60,
+            "niveau": 16,
+            "puissance_attaque": 62,
+            "defense": 63,
+            "types": ["Plante", "Poison"],
+            "evolution": "Florizarre"
+        },
+        {
+            "id": 3,
+            "asset" : "../../assets/assets_pokemon/florizarre.png",
+            "nom": "Florizarre",
+            "pv": 80,
+            "niveau": 32,
+            "puissance_attaque": 82,
+            "defense": 83,
+            "types": ["Plante", "Poison"],
+            "evolution": null
+        },
+        {
+            "id": 4,
+            "asset" : "../../assets/assets_pokemon/salameche.png",
+            "nom": "Salamèche",
+            "pv": 39,
+            "niveau": 5,
+            "puissance_attaque": 52,
+            "defense": 43,
+            "types": ["Feu"],
+            "evolution": "Reptincel"
+        },
+        {
+            "id": 5,
+            "asset" : "../../assets/assets_pokemon/reptincel.png",
+            "nom": "Reptincel",
+            "pv": 58,
+            "niveau": 16,
+            "puissance_attaque": 64,
+            "defense": 58,
+            "types": ["Feu"],
+            "evolution": "Dracaufeu"
+        },
+        {
+            "id": 6,
+            "asset" : "../../assets/assets_pokemon/dracaufeu.png",
+            "nom": "Dracaufeu",
+            "pv": 78,
+            "niveau": 36,
+            "puissance_attaque": 84,
+            "defense": 78,
+            "types": ["Feu", "Vol"],
+            "evolution": null
+        },
+        {
+            "id": 7,
+            "asset" : "../../assets/assets_pokemon/carapuce.png",
+            "nom": "Carapuce",
+            "pv": 44,
+            "niveau": 5,
+            "puissance_attaque": 48,
+            "defense": 65,
+            "types": ["Eau"],
+            "evolution": "Carabaffe"
+        },
+        {
+            "id": 8,
+            "asset" : "../../assets/assets_pokemon/carabaffe.png",
+            "nom": "Carabaffe",
+            "pv": 59,
+            "niveau": 16,
+            "puissance_attaque": 63,
+            "defense": 80,
+            "types": ["Eau"],
+            "evolution": "Tortank"
+        },
+        {
+            "id": 9,
+            "nom": "Tortank",
+            "asset" : "../../assets/assets_pokemon/tortank.png",
+            "pv": 79,
+            "niveau": 36,
+            "puissance_attaque": 83,
+            "defense": 100,
+            "types": ["Eau"],
+            "evolution": null
+        },
+        {
+            "id": 10,
+            "asset" : "../../assets/assets_pokemon/pikachu.png",
+            "nom": "Pikachu",
+            "pv": 35,
+            "niveau": 5,
+            "puissance_attaque": 55,
+            "defense": 40,
+            "types": ["Électrique"],
+            "evolution": "Raichu"
+        },
+        {
+            "id": 11,
+            "asset" : "../../assets/assets_pokemon/raichu.png",
+            "nom": "Raichu",
+            "pv": 60,
+            "niveau": null,
+            "puissance_attaque": 90,
+            "defense": 55,
+            "types": ["Électrique"],
+            "evolution": null
+        },
+        {
+            "id": 12,
+            "asset" : "../../assets/assets_pokemon/mewtwo.png",
+            "nom": "Mewtwo",
+            "pv": 106,
+            "niveau": null,
+            "puissance_attaque": 110,
+            "defense": 90,
+            "types": ["Psychique"],
+            "evolution": null
+        },
+        {
+            "id": 13,
+            "asset" : "../../assets/assets_pokemon/mew.png",
+            "nom": "Mew",
+            "pv": 100,
+            "niveau": null,
+            "puissance_attaque": 100,
+            "defense": 100,
+            "types": ["Psychique"],
+            "evolution": null
+        },
+        {
+            "id": 14,
+            "asset" : "../../assets/assets_pokemon/jigglypuff.png",
+            "nom": "Jigglypuff",
+            "pv": 115,
+            "niveau": null,
+            "puissance_attaque": 45,
+            "defense": 20,
+            "types": ["Normal", "Fée"],
+            "evolution": "Wigglytuff"
+        },
+        {
+            "id": 15,
+            "asset" : "../../assets/assets_pokemon/wigglytuff.png",
+            "nom": "Wigglytuff",
+            "pv": 140,
+            "niveau": null,
+            "puissance_attaque": 70,
+            "defense": 45,
+            "types": ["Normal", "Fée"],
+            "evolution": null
+        },
+        {
+            "id": 16,
+            "asset" : "../../assets/assets_pokemon/grenousse.png",
+            "nom": "Grenousse",
+            "pv": 41,
+            "niveau": 5,
+            "puissance_attaque": 56,
+            "defense": 40,
+            "types": ["Eau"],
+            "evolution": "Croâporal"
+        },
+        {
+            "id": 17,
+            "asset" : "../../assets/assets_pokemon/croaporal.png",
+            "nom": "Croâporal",
+            "pv": 54,
+            "niveau": 16,
+            "puissance_attaque": 63,
+            "defense": 52,
+            "types": ["Eau"],
+            "evolution": "Amphinobi"
+        },
+        {
+            "id": 18,
+            "asset" : "../../assets/assets_pokemon/amphinobi.png",
+            "nom": "Amphinobi",
+            "pv": 72,
+            "niveau": 36,
+            "puissance_attaque": 95,
+            "defense": 67,
+            "types": ["Eau", "Ténèbres"],
+            "evolution": null
+        },
+        {
+            "id": 19,
+            "asset" : "../../assets/assets_pokemon/rondoudou.png",
+            "nom": "Rondoudou",
+            "pv": 115,
+            "niveau": null,
+            "puissance_attaque": 70,
+            "defense": 65,
+            "types": ["Normal", "Fée"],
+            "evolution": "Grodoudou"
+        },
+        {
+            "id": 20,
+            "asset" : "../../assets/assets_pokemon/grodoudou.png",
+            "nom": "Grodoudou",
+            "pv": 140,
+            "niveau": null,
+            "puissance_attaque": 85,
+            "defense": 90,
+            "types": ["Normal", "Fée"],
+            "evolution": null
+        }
+    ],
+    "pokemon_ajoute": [
+
+    ]
+}

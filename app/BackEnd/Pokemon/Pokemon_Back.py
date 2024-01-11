@@ -19,7 +19,7 @@ class Pokemon:
         # Charger les informations depuis le fichier JSON
         with open(chemin_data, 'r') as fichier:
             data = json.load(fichier)
-            for pokemon_data in data:
+            for pokemon_data in data["pokemon"]:
                 if pokemon_data["nom"] == self.nom:
                     # Assigner les informations au Pokemon
                     self.id = pokemon_data["id"]
