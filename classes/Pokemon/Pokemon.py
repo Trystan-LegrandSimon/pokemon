@@ -11,7 +11,7 @@ chemin_data = os.path.join(dossier_data, fichier_data)
 
 class Pokemon:
     
-    def __init__(self, id, asset, nom, pv, niveau, puissance_attaque, defense, type, evolution):
+    def __init__(self, id, asset, nom, pv, niveau, puissance_attaque, defense, types, evolution):
         self.id = id
         self.asset = asset
         self.nom = nom
@@ -19,7 +19,7 @@ class Pokemon:
         self.niveau = niveau
         self.puissance_attaque = puissance_attaque
         self.defense = defense
-        self.type = type
+        self.types = types
         self.evolution = evolution
         
     def infos(self):
@@ -30,12 +30,57 @@ class Pokemon:
         print(f"Niveau : {str(self.niveau)}")
         print(f"Puissance d'Attaque : {str(self.puissance_attaque)}")
         print(f"Défense : {str(self.defense)}")
-        print(f"Type : {str(self.type)}")
+        print(f"Types : {str(self.types)}")
         print(f"Évolution : {str(self.evolution)}")
+        print()
+        
+    def attaquer(self, pokemon):
+        print(f"{self.nom} attaque {pokemon.nom} !")
+        print()
+        
+        # Calculer les dégâts
+        degats = self.puissance_attaque - pokemon.defense
+        
+        # Appliquer les dégâts
+        pokemon.pv -= degats
+        
+        # Afficher les dégâts
+        print(f"{pokemon.nom} a perdu {str(degats)} PV !")
+        print(f"{pokemon.nom} a maintenant {str(pokemon.pv)} PV.")
+        print()
+        
+        # Vérifier si le Pokémon est KO
+        if pokemon.pv <= 0:
+            print(f"{pokemon.nom} est KO !")
+            print()
+        
+    def defense(self, pokemon):
+        print(f"{self.nom} se défend !")
+        print()
+        
+        # Calculer les dégâts
+        degats = pokemon.puissance_attaque - self.defense
+        
+        # Appliquer les dégâts
+        self.pv -= degats
+        
+        # Afficher les dégâts
+        print(f"{self.nom} a perdu {str(degats)} PV !")
+        print(f"{self.nom} a maintenant {str(self.pv)} PV.")
+        print()
+        
+        # Vérifier si le Pokémon est KO
+        if self.pv <= 0:
+            print(f"{self.nom} est KO !")
+            print()
 
 # Charger les données depuis le fichier JSON
 with open(chemin_data, "r") as fichier_pokemon:
     donnees_pokemon = json.load(fichier_pokemon)
 
-# Afficher les données chargées
-print(donnees_pokemon)
+# Créer une instance de la classe Pokemon pour chaque entrée dans le fichier JSON
+pokemons = [Pokemon(**pokemon) for pokemon in donnees_pokemon]
+
+# Afficher les informations de tous les Pokémon instanciés
+for pokemon in pokemons:
+    pokemon.infos()
