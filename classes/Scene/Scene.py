@@ -5,8 +5,8 @@ import os
 class Scene:
     def __init__(self):
         pygame.init()
-        self.largeur = 1920
-        self.hauteur = 1025
+        self.largeur = 1520
+        self.hauteur = 825
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
         pygame.display.set_caption("pokégame !")
         dossier_assets = "assets/assets_scene"
