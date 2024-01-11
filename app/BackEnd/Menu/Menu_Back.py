@@ -3,7 +3,7 @@ import sys
 import os
 import math
 
-class MenuPokemon:
+class Menu:
     def __init__(self):
         pygame.init()
         self.largeur = 800
@@ -84,5 +84,5 @@ class MenuPokemon:
             clock.tick(60)
 
 if __name__ == "__main__":
-    menu = MenuPokemon()
+    menu = Menu()
     menu.executer()
