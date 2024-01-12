@@ -2,6 +2,7 @@ import pygame
 import sys
 import os
 import math
+import subprocess
 
 class Menu:
     def __init__(self):
@@ -10,14 +11,15 @@ class Menu:
         self.hauteur = 600
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
         pygame.display.set_caption("Menu Pokémon")
-        self.police = pygame.font.Font(None, 24)
+        self.police_taille = 24
+        self.police = pygame.font.Font(None, self.police_taille)
         # chemin d'accès au fond du menu
         dossier_assets = "app/assets/assets_menu"
         assets_file = "backgmenu.png"
         assets_titre = "pokemontitre.png"
         chemin_image = os.path.join(dossier_assets, assets_file)
         chemin_titre = os.path.join(dossier_assets, assets_titre)
-        # gestion d'erreur 
+        # gestion d'erreur
         if not os.path.exists(chemin_image):
             print(f"Erreur : Le fichier image '{assets_file}' n'existe pas dans le dossier '{dossier_assets}'.")
             sys.exit()
@@ -30,6 +32,7 @@ class Menu:
         texte_surface = self.police.render(texte, True, couleur)
         texte_rect = texte_surface.get_rect(center=(x, y))
         self.fenetre.blit(texte_surface, texte_rect)
+
     def afficher_boutons(self):
         bouton_largeur = 175
         bouton_hauteur = 30
@@ -65,6 +68,19 @@ class Menu:
     def afficher_titre(self):
         titre_rect = self.titre.get_rect(center=(self.largeur // 2, 100))
         self.fenetre.blit(self.titre, titre_rect)
+
+    def verifier_clic(self, x, y):
+        bouton1_rect = pygame.Rect((self.largeur - 150) // 2 - 150 - 20, 425, 150, 30)
+        bouton2_rect = pygame.Rect((self.largeur - 150) // 2 - 20, 425, 150, 30)
+        bouton3_rect = pygame.Rect((self.largeur - 150) // 2 + 150 + 20 - 150, 425, 150, 30)
+
+        if bouton1_rect.collidepoint(x, y):
+            print("Lancer une partie")
+            subprocess.Popen(["python", "chemin/vers/votre/fichier.py"])  # Remplacez "chemin/vers/votre/fichier.py" par le chemin réel de votre fichier Python.
+        elif bouton2_rect.collidepoint(x, y):
+            print("Ajouter un Pokémon")
+        elif bouton3_rect.collidepoint(x, y):
+            print("Accéder au Pokédex")
 
     def executer(self):
         clock = pygame.time.Clock()
