@@ -1,61 +1,58 @@
-#!/usr/local/bin/python3
-# -*- coding: utf-8 -*-
 import pygame
 import sys
-import os
-class Scene:
-    
-    def __init__(self):
-        pygame.init()
-        self.largeur = 1520
-        self.hauteur = 825
-        self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
-        pygame.display.set_caption("pokégame !")
-        dossier_assets = "app/assets/assets_scene"
-        assets_back = "backcombat.png"
-        chemin_back = os.path.join(dossier_assets, assets_back)
-        self.fond = pygame.image.load(chemin_back).convert()
-        
-    def combat(self, description, combat=None, ajout_pokedex=None):
-        self.description = description
-        self.combat = combat
-        self.ajout_pokedex = ajout_pokedex
-          
-    def afficher_description(self):
-        print(self.description)
-        
-    def lancer_combat(self):
-        if self.combat:
-            print("Combat en cours...")
-            # Logique de combat ici
-            
-            # Supposons qu'un Pokémon nommé "Pikachu" a été vaincu
-            pokemon_vaincu = "Pikachu"
-            
-            # Ajouter le Pokémon vaincu au Pokedex
-            if self.ajout_pokedex:
-                self.ajout_pokedex.ajouter_pokemon(pokemon_vaincu)
-        else:
-            print("Pas de combat dans cette scène.")
-            
-    def effectuer_ajout_pokedex(self):
-        if self.ajout_pokedex:
-            print("Ajout au Pokedex en cours...")
-            self.ajout_pokedex.sauvegarder_vers_json()
-        else:
-            print("Pas d'ajout au Pokedex dans cette scène.")
 
-if __name__ == "__main__":
-    scene = Scene()
-    running = True
-    while running:
-        for evenement in pygame.event.get():
-            if evenement.type == pygame.QUIT:
-                running = False
+# Initialisation de Pygame
+pygame.init()
 
-        scene.fenetre.fill((255, 255, 255))
-        scene.fenetre.blit(scene.fond, (0, 0))
-        pygame.display.flip()
+# Couleurs
+BLANC = (255, 255, 255)
+NOIR = (0, 0, 0)
+GRIS = (169, 169, 169)
 
-    pygame.quit()
-    sys.exit()
+# Dimensions de la fenêtre
+largeur, hauteur = 1520, 825
+
+# Création de la fenêtre
+ecran = pygame.display.set_mode((largeur, hauteur))
+pygame.display.set_caption("Arène Pokémon")
+
+# Chargement de l'image de fond
+fond = pygame.image.load('app/assets/assets_scene/backcombat.png')
+fond = pygame.transform.scale(fond, (largeur, hauteur))
+
+# Classe Pokémon
+class Pokemon(pygame.sprite.Sprite):
+    def __init__(self, image, x, y, largeur, hauteur):
+        super().__init__()
+        self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image, (largeur, hauteur))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)  # Utiliser center au lieu de x, y
+
+    def afficher(self):
+        ecran.blit(self.image, self.rect)
+
+# Taille réduite du Pokémon
+pokemon_largeur, pokemon_hauteur = 225, 225
+
+# Position initiale du Pokémon
+position_initiale = (largeur // 2 + 145, hauteur // 2 - 200)
+
+# Initialiser le Pokémon à la position initiale
+pokemon = Pokemon('app/assets/assets_pokemon/bulbizarre.png', *position_initiale, pokemon_largeur, pokemon_hauteur)
+
+# Boucle principale
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Dessiner l'image de fond
+    ecran.blit(fond, (0, 0))
+
+    # Dessiner le Pokémon
+    pokemon.afficher()
+
+    # Mise à jour de l'affichage
+    pygame.display.flip()
