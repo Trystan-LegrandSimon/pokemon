@@ -3,8 +3,6 @@ import sys
 import os
 import random
 import json
-from Pokemon import Pokemon
-from Bouton import Bouton
 
 # Initialisation de Pygame
 pygame.init()
@@ -17,40 +15,37 @@ GRIS = (169, 169, 169)
 # Dimensions de la fenêtre
 largeur, hauteur = 1520, 825
 
-# Création de la fenêtre
-ecran = pygame.display.set_mode((largeur, hauteur))
-pygame.display.set_caption("Arène Pokémon")
+# Classe Pokémon
+class Pokemon(pygame.sprite.Sprite):
+    def __init__(self, image, x, y, largeur, hauteur, nom, evolution, pv):
+        super().__init__()
+        self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image, (largeur, hauteur))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.nom = nom
+        self.evolution = evolution
+        self.pv = pv
 
-# Chargement de l'image de fond
-fond = pygame.image.load('app/assets/assets_scene/backcombat.png')
-fond = pygame.transform.scale(fond, (largeur, hauteur))
+    def afficher(self, ecran):
+        ecran.blit(self.image, self.rect)
 
-# Fonction pour choisir un Pokémon
-def choisir_pokemon():
-    print("Choisissez votre Pokémon:")
-    with open('app/data/pokemon.json', 'r') as file:
-        data = json.load(file)
-        for i, pokemon in enumerate(data["pokemon"], start=1):
-            print(f"{i}. {pokemon['nom']}")
-    
-    while True:
-        try:
-            choix = int(input("Entrez le numéro du Pokémon que vous voulez choisir: "))
-            if 1 <= choix <= len(data["pokemon"]):
-                return data["pokemon"][choix - 1]
-            else:
-                print("Choix invalide. Veuillez choisir à nouveau.")
-        except ValueError:
-            print("Veuillez entrer un nombre.")
+# Classe pour traiter les données du JSON
+class PokemonData:
+    def __init__(self, json_file):
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+            self.pokemon_data = data["pokemon"]
 
-# Obtenir les informations du Pokémon choisi
-pokemon_info = choisir_pokemon()
-
-# Taille réduite du Pokémon
-pokemon_largeur, pokemon_hauteur = 225, 225
+    def get_random_pokemon(self):
+        pokemon_info = random.choice(self.pokemon_data)
+        return pokemon_info
 
 # Dossier des Pokémon
 dossier_pokemon = 'app/assets/assets_pokemon'
+
+# Obtention des informations d'un Pokémon au hasard
+pokemon_info = PokemonData('app/data/pokemon.json').get_random_pokemon()
 
 # Position initiale du Pokémon
 position_initiale_pokemon = (largeur // 2 + 145, hauteur // 2 - 200)
@@ -59,103 +54,85 @@ position_initiale_pokemon = (largeur // 2 + 145, hauteur // 2 - 200)
 pokemon = Pokemon(
     os.path.join(dossier_pokemon, pokemon_info["asset"]),
     *position_initiale_pokemon,
-    pokemon_largeur,
-    pokemon_hauteur,
+    225,
+    225,
     pokemon_info["nom"],
     pokemon_info["evolution"],
     pokemon_info["pv"]
 )
+
+# Création de la fenêtre principale du combat
+ecran = pygame.display.set_mode((largeur, hauteur))
+pygame.display.set_caption("Arène Pokémon")
+
+# Chargement de l'image de fond
+fond = pygame.image.load('app/assets/assets_scene/backcombat.png')
+fond = pygame.transform.scale(fond, (largeur, hauteur))
+
+# Police pour les informations
+police_info = pygame.font.Font(None, 24)
 
 # Classe Bouton
 class Bouton:
     def __init__(self, x, y, largeur, hauteur, couleur, texte, action):
         self.rect = pygame.Rect(x, y, largeur, hauteur)
         self.couleur = couleur
-        self.texte = texte
+        self.texte_surface = None  # Initialiser à None pour l'instant
         self.action = action
 
-    def afficher(self):
+        # Convertir le texte en surface dès la création du bouton
+        self.maj_texte(texte)
+
+    def maj_texte(self, texte):
+        self.texte_surface = police_info.render(texte, True, BLANC)
+
+    def afficher(self, ecran):
         pygame.draw.rect(ecran, self.couleur, self.rect)
-        self.afficher_texte(self.texte, self.rect.centerx, self.rect.centery, BLANC)
 
-    def afficher_texte(self, texte, x, y, couleur):
-        police = pygame.font.Font(None, 24)
-        texte_surface = police.render(texte, True, couleur)
-        texte_rect = texte_surface.get_rect(topleft=(x - 650, y - 40))
-        ecran.blit(texte_surface, texte_rect)
+        # Vérifier si la surface de texte existe
+        if self.texte_surface:
+            self.afficher_texte(ecran, self.texte_surface, self.rect.centerx, self.rect.centery, BLANC)
 
-# Création des boutons RGB
-bouton1 = Bouton(200, hauteur - 50, 100, 40, (255, 0, 0), "Bouton 1", None)
-bouton2 = Bouton(400, hauteur - 50, 100, 40, (0, 255, 0), "Bouton 2", None)
+    def afficher_texte(self, ecran, texte_surface, x, y, couleur):
+        ecran.blit(texte_surface, (x - texte_surface.get_width() / 2, y - texte_surface.get_height() / 2))
 
-# Afficher le texte avec l'invite pour appuyer sur Entrée
-invite_texte = "Appuyez sur Entrée pour continuer..."
-invite_font = pygame.font.Font(None, 36)
-invite_surface = invite_font.render(invite_texte, True, BLANC)
-invite_rect = invite_surface.get_rect(center=(largeur // 2, hauteur - 100))
+# Création des boutons
+bouton1 = Bouton(200, hauteur - 100, 150, 40, (255, 0, 0), "Attaque", None)
+bouton2 = Bouton(400, hauteur - 100, 150, 40, (0, 255, 0), "Défense", None)
 
 # Boucle principale
-en_attente_entree = True
-while en_attente_entree:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            en_attente_entree = False
-
-    # Dessiner l'image de fond
-    ecran.blit(fond, (0, 0))
-
-    # Afficher le Pokémon
-    pokemon.afficher()
-
-    # Afficher les boutons
-    bouton1.afficher()
-    bouton2.afficher()
-
-    # Afficher les informations du Pokémon
-    nom_texte = f"Nom: {pokemon.nom}"
-    evolution_texte = f"Évolution: {pokemon.evolution}" if pokemon.evolution else "Évolution: Aucune"
-    pv_texte = f"PV: {pokemon.pv}"
-
-    pokemon_info_texts = [nom_texte, evolution_texte, pv_texte]
-
-    for i, texte in enumerate(pokemon_info_texts):
-        bouton1.afficher_texte(texte, 1000, 50 + i * 30, BLANC)
-
-    # Afficher l'invite pour appuyer sur Entrée
-    ecran.blit(invite_surface, invite_rect)
-
-    # Mettre à jour l'affichage
-    pygame.display.flip()
-
-# Boucle principale (après avoir appuyé sur Entrée)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()
+            if bouton1.rect.collidepoint(x, y):
+                print("Clic sur Bouton 1")
+                # Ajoutez ici l'action que vous voulez exécuter pour le Bouton 1
+            elif bouton2.rect.collidepoint(x, y):
+                print("Clic sur Bouton 2")
+                # Ajoutez ici l'action que vous voulez exécuter pour le Bouton 2
 
     # Dessiner l'image de fond
     ecran.blit(fond, (0, 0))
 
-    # Afficher le Pokémon
-    pokemon.afficher()
+    # Dessiner le Pokémon
+    pokemon.afficher(ecran)
 
-    # Afficher les boutons
-    bouton1.afficher()
-    bouton2.afficher()
+    # Dessiner les boutons
+    bouton1.afficher(ecran)
+    bouton2.afficher(ecran)
 
     # Afficher les informations du Pokémon
-    nom_texte = f"Nom: {pokemon.nom}"
-    evolution_texte = f"Évolution: {pokemon.evolution}" if pokemon.evolution else "Évolution: Aucune"
-    pv_texte = f"PV: {pokemon.pv}"
+    nom_texte_surface = police_info.render(f"Nom: {pokemon.nom}", True, BLANC)
+    evolution_texte_surface = police_info.render(f"Évolution: {pokemon.evolution}" if pokemon.evolution else "Évolution: Aucune", True, BLANC)
+    pv_texte_surface = police_info.render(f"PV: {pokemon.pv}", True, BLANC)
 
-    pokemon_info_texts = [nom_texte, evolution_texte, pv_texte]
+    ecran.blit(nom_texte_surface, (300, 20))
+    ecran.blit(evolution_texte_surface, (300, 40))
+    ecran.blit(pv_texte_surface, (300, 60))
 
-    for i, texte in enumerate(pokemon_info_texts):
-        bouton1.afficher_texte(texte, 1000, 50 + i * 30, BLANC)
-
-    # Mettre à jour l'affichage
+    # Mise à jour de l'affichage
     pygame.display.flip()
