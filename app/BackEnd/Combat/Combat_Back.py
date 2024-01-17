@@ -41,7 +41,7 @@ class Combat:
         self.tour += 1
         print(f"Fin du tour {self.tour}.\n")
         
-# Exemple de création d'instances de Pokemon
+# Exemple d'instances de Pokemon
 pokeball1 = Pokemon(nom="Herbizarre", puissance_attaque=20, defense=10, pv=50)
 pokeball2 = Pokemon(nom="Carapuce", puissance_attaque=18, defense=12, pv=50)
 
