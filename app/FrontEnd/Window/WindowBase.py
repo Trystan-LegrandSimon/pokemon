@@ -115,6 +115,7 @@ class Window:
         elif index == 2:
             print("Accéder au Pokédex - Redirection vers le Pokédex")
             # Ajoutez ici le code pour rediriger vers le Pokédex
+            from WindowPokedex import WindowPokedex
 
     def executer(self):
         clock = pygame.time.Clock()
