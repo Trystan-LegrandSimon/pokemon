@@ -1,16 +1,20 @@
-import pygame
+# PokemonData.py
+import json
 import os
+import random
 
-class Pokemon(pygame.sprite.Sprite):
-    def __init__(self, image, x, y, largeur, hauteur, nom, evolution, pv):
-        super().__init__()
-        self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image, (largeur, hauteur))
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        self.nom = nom
-        self.evolution = evolution
-        self.pv = pv
+class PokemonData:
+    def __init__(self, json_file):
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+            self.pokemon_data = data["pokemon"]
 
-    def afficher(self, ecran):
-        ecran.blit(self.image, self.rect)
+    def get_random_pokemon(self):
+        pokemon_info = random.choice(self.pokemon_data)
+        return pokemon_info
+
+    def get_pokemon_by_name(self, name):
+        for pokemon_info in self.pokemon_data:
+            if pokemon_info["nom"] == name:
+                return pokemon_info
+        return None
