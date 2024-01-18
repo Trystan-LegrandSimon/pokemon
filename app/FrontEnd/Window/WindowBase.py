@@ -85,6 +85,9 @@ class Window:
         if index == 0:
             print("Lancer une partie - Redirection vers le jeu")
             # Ajoutez ici le code pour rediriger vers le jeu
+            from WindowGame import WindowGame
+            game = WindowGame()
+            game.run()
         elif index == 1:
             print("Ajouter un Pokémon - Redirection vers l'ajout de Pokémon")
             # Ajoutez ici le code pour rediriger vers l'ajout de Pokémon

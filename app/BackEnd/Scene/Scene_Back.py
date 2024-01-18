@@ -48,17 +48,17 @@ class Scene:
         else:
             print("Pas d'ajout au Pokedex dans cette scène.")
 
-if __name__ == "__main__":
-    scene = Scene()
-    running = True
-    while running:
-        for evenement in pygame.event.get():
-            if evenement.type == pygame.QUIT:
-                running = False
+# if __name__ == "__main__":
+#     scene = Scene()
+#     running = True
+#     while running:
+#         for evenement in pygame.event.get():
+#             if evenement.type == pygame.QUIT:
+#                 running = False
 
-        scene.fenetre.fill((255, 255, 255))
-        scene.fenetre.blit(scene.fond, (0, 0))
-        pygame.display.flip()
+#         scene.fenetre.fill((255, 255, 255))
+#         scene.fenetre.blit(scene.fond, (0, 0))
+#         pygame.display.flip()
 
-    pygame.quit()
-    sys.exit()
+#     pygame.quit()
+#     sys.exit()
