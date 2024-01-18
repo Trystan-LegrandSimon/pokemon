@@ -1,3 +1,6 @@
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
 import pygame
 import sys
 sys.path.append("app/BackEnd/Scene/")
