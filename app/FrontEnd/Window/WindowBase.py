@@ -3,8 +3,8 @@ import sys
 import os
 import math
 
-class Menu:
-    
+class Window:
+
     def __init__(self):
         pygame.init()
         self.largeur = 800
@@ -18,8 +18,8 @@ class Menu:
         assets_titre = "pokemontitre.png"
         chemin_image = os.path.join(dossier_assets, assets_file)
         chemin_titre = os.path.join(dossier_assets, assets_titre)
-        
-        # gestion d'erreur 
+
+        # gestion d'erreur
         if not os.path.exists(chemin_image):
             print(f"Erreur : Le fichier image '{assets_file}' n'existe pas dans le dossier '{dossier_assets}'.")
             sys.exit()
@@ -33,6 +33,27 @@ class Menu:
         texte_rect = texte_surface.get_rect(center=(x, y))
         self.fenetre.blit(texte_surface, texte_rect)
         
+    def detecter_survol_bouton(self, x, y):
+        bouton_largeur = 175
+        bouton_hauteur = 30
+        espacement = 20
+
+        for i in range(3):
+            bouton_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 + (i - 1) * (bouton_largeur + espacement), 425, bouton_largeur, bouton_hauteur)
+
+            if bouton_rect.collidepoint(x, y):
+                return True
+
+        return False
+
+    def changer_curseur_sur_survol(self):
+        x, y = pygame.mouse.get_pos()
+
+        if self.detecter_survol_bouton(x, y):
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
     def afficher_boutons(self):
         bouton_largeur = 175
         bouton_hauteur = 30
@@ -69,6 +90,33 @@ class Menu:
         titre_rect = self.titre.get_rect(center=(self.largeur // 2, 100))
         self.fenetre.blit(self.titre, titre_rect)
 
+    def traiter_clic_bouton(self, x, y):
+        bouton_largeur = 175
+        bouton_hauteur = 30
+        espacement = 20
+
+        for i in range(3):
+            bouton_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 + (i - 1) * (bouton_largeur + espacement), 425, bouton_largeur, bouton_hauteur)
+
+            if bouton_rect.collidepoint(x, y):
+                self.rediriger_vers_interface(i)
+                break
+
+    def rediriger_vers_interface(self, index):
+        if index == 0:
+            print("Lancer une partie - Redirection vers le jeu")
+            # Ajoutez ici le code pour rediriger vers le jeu
+            from WindowGame import WindowGame
+            game = WindowGame()
+            game.run()
+        elif index == 1:
+            print("Ajouter un Pokémon - Redirection vers l'ajout de Pokémon")
+            # Ajoutez ici le code pour rediriger vers l'ajout de Pokémon
+        elif index == 2:
+            print("Accéder au Pokédex - Redirection vers le Pokédex")
+            # Ajoutez ici le code pour rediriger vers le Pokédex
+            from WindowPokedex import WindowPokedex
+
     def executer(self):
         clock = pygame.time.Clock()
         while True:
@@ -78,7 +126,9 @@ class Menu:
                     sys.exit()
                 elif evenement.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-                    self.verifier_clic(x, y)
+                    self.traiter_clic_bouton(x, y)
+            
+            self.changer_curseur_sur_survol() 
             self.fenetre.fill((255, 255, 255))
             self.fenetre.blit(self.fond, (0, 0))
             self.afficher_boutons()
@@ -87,5 +137,5 @@ class Menu:
             clock.tick(60)
 
 if __name__ == "__main__":
-    menu = Menu()
+    menu = Window()
     menu.executer()
