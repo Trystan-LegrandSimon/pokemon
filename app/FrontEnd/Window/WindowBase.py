@@ -32,6 +32,27 @@ class Window:
         texte_surface = self.police.render(texte, True, couleur)
         texte_rect = texte_surface.get_rect(center=(x, y))
         self.fenetre.blit(texte_surface, texte_rect)
+        
+    def detecter_survol_bouton(self, x, y):
+        bouton_largeur = 175
+        bouton_hauteur = 30
+        espacement = 20
+
+        for i in range(3):
+            bouton_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 + (i - 1) * (bouton_largeur + espacement), 425, bouton_largeur, bouton_hauteur)
+
+            if bouton_rect.collidepoint(x, y):
+                return True
+
+        return False
+
+    def changer_curseur_sur_survol(self):
+        x, y = pygame.mouse.get_pos()
+
+        if self.detecter_survol_bouton(x, y):
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
     def afficher_boutons(self):
         bouton_largeur = 175
@@ -105,6 +126,8 @@ class Window:
                 elif evenement.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     self.traiter_clic_bouton(x, y)
+            
+            self.changer_curseur_sur_survol() 
             self.fenetre.fill((255, 255, 255))
             self.fenetre.blit(self.fond, (0, 0))
             self.afficher_boutons()
