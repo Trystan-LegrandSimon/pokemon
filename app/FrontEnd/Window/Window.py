@@ -4,7 +4,7 @@ import os
 import math
 
 class Window:
-    
+
     def __init__(self):
         pygame.init()
         self.largeur = 800
@@ -18,8 +18,8 @@ class Window:
         assets_titre = "pokemontitre.png"
         chemin_image = os.path.join(dossier_assets, assets_file)
         chemin_titre = os.path.join(dossier_assets, assets_titre)
-        
-        # gestion d'erreur 
+
+        # gestion d'erreur
         if not os.path.exists(chemin_image):
             print(f"Erreur : Le fichier image '{assets_file}' n'existe pas dans le dossier '{dossier_assets}'.")
             sys.exit()
@@ -32,7 +32,7 @@ class Window:
         texte_surface = self.police.render(texte, True, couleur)
         texte_rect = texte_surface.get_rect(center=(x, y))
         self.fenetre.blit(texte_surface, texte_rect)
-        
+
     def afficher_boutons(self):
         bouton_largeur = 175
         bouton_hauteur = 30
@@ -69,6 +69,29 @@ class Window:
         titre_rect = self.titre.get_rect(center=(self.largeur // 2, 100))
         self.fenetre.blit(self.titre, titre_rect)
 
+    def traiter_clic_bouton(self, x, y):
+        bouton_largeur = 175
+        bouton_hauteur = 30
+        espacement = 20
+
+        for i in range(3):
+            bouton_rect = pygame.Rect((self.largeur - bouton_largeur) // 2 + (i - 1) * (bouton_largeur + espacement), 425, bouton_largeur, bouton_hauteur)
+
+            if bouton_rect.collidepoint(x, y):
+                self.rediriger_vers_interface(i)
+                break
+
+    def rediriger_vers_interface(self, index):
+        if index == 0:
+            print("Lancer une partie - Redirection vers le jeu")
+            # Ajoutez ici le code pour rediriger vers le jeu
+        elif index == 1:
+            print("Ajouter un Pokémon - Redirection vers l'ajout de Pokémon")
+            # Ajoutez ici le code pour rediriger vers l'ajout de Pokémon
+        elif index == 2:
+            print("Accéder au Pokédex - Redirection vers le Pokédex")
+            # Ajoutez ici le code pour rediriger vers le Pokédex
+
     def executer(self):
         clock = pygame.time.Clock()
         while True:
@@ -78,7 +101,7 @@ class Window:
                     sys.exit()
                 elif evenement.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-                    self.verifier_clic(x, y)
+                    self.traiter_clic_bouton(x, y)
             self.fenetre.fill((255, 255, 255))
             self.fenetre.blit(self.fond, (0, 0))
             self.afficher_boutons()
