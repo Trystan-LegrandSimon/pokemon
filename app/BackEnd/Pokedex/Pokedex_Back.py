@@ -1,4 +1,3 @@
-
 import pygame
 import sys
 import os
@@ -11,8 +10,15 @@ class Pokedex:
         self.hauteur = 600
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
         pygame.display.set_caption("Pokédex")
-        self.police_taille = 24
+        self.police_taille = 34
         self.police = pygame.font.Font(None, self.police_taille)
+
+        # Liste des boutons des Pokémon à droite
+        self.boutons_pokemon = []
+        self.bouton_selectionne = None
+
+        # Initialisation des données Pokémon
+        self.donnees_pokemon = []
 
         # Chargement des données Pokémon depuis le fichier JSON
         self.charger_donnees_pokemon()
@@ -29,38 +35,50 @@ class Pokedex:
 
         self.image_pokedex = pygame.image.load(chemin_image).convert()
 
-        # Liste des boutons des Pokémon à droite
-        self.boutons_pokemon = []
-        self.bouton_selectionne = None
-
     def charger_donnees_pokemon(self):
         # Charger les données Pokémon depuis le fichier JSON
         chemin_json = 'app/data/pokemon.json' 
         if os.path.exists(chemin_json):
             with open(chemin_json, "r") as fichier:
-                self.donnees_pokemon = json.load(fichier)
+                self.donnees_pokemon = json.load(fichier)["pokemon"]
         else:
             print(f"Erreur : Le fichier JSON '{chemin_json}' n'existe pas.")
             sys.exit()
 
-    def afficher_infos_pokemon(self, pokemon):
+    def afficher_infos_pokemon(self, index_pokemon):
         # Afficher les informations du Pokémon sélectionné
-        if pokemon:
-            infos_surface = self.police.render(f"Nom: {pokemon['nom']}", True, (0, 0, 0))
-            self.fenetre.blit(infos_surface, (self.largeur // 2, 50))
+        if index_pokemon is not None and 0 <= index_pokemon < len(self.donnees_pokemon):
+            pokemon_selectionne = self.donnees_pokemon[index_pokemon]
 
-            infos_surface = self.police.render(f"Évolution: {pokemon['evolution']}", True, (0, 0, 0))
-            self.fenetre.blit(infos_surface, (self.largeur // 2, 80))
+            infos_surface = self.police.render(f"Nom: {pokemon_selectionne['nom']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (self.largeur // 2, 150))
+
+            infos_surface = self.police.render(f"Évolution: {pokemon_selectionne['evolution']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (self.largeur // 2, 180))
 
             # Ajoutez d'autres informations en fonction de votre structure JSON
             # ...
+
+    def gerer_clic(self, x, y):
+        # Vérifier si l'un des boutons des Pokémon a été cliqué
+        for i, bouton in enumerate(self.boutons_pokemon):
+            if bouton.collidepoint(x, y):
+                self.bouton_selectionne = i
+                self.afficher_infos_pokemon(self.bouton_selectionne)
+
+                # Déclencher votre action ici en fonction du Pokémon sélectionné
+                self.action_pour_pokemon(self.donnees_pokemon[i])
+
+    def action_pour_pokemon(self, pokemon):
+        # Mettez ici votre logique spécifique pour l'action associée au Pokémon
+        print(f"Action déclenchée pour le Pokémon : {pokemon['nom']}")
 
     def executer(self):
         clock = pygame.time.Clock()
 
         # Création des boutons des Pokémon à droite
         for i, pokemon in enumerate(self.donnees_pokemon):
-            bouton = pygame.Rect(self.largeur - 200, 50 * i, 200, 50)
+            bouton = pygame.Rect(self.largeur - 700, 20 * i + 120, 200, 50)
             self.boutons_pokemon.append(bouton)
 
         while True:
@@ -70,11 +88,7 @@ class Pokedex:
                     sys.exit()
                 elif evenement.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-
-                    # Vérifier si l'un des boutons des Pokémon a été cliqué
-                    for i, bouton in enumerate(self.boutons_pokemon):
-                        if bouton.collidepoint(x, y):
-                            self.bouton_selectionne = i
+                    self.gerer_clic(x, y)
 
             self.fenetre.fill((255, 255, 255))
             self.fenetre.blit(self.image_pokedex, (0, 0))
@@ -83,12 +97,7 @@ class Pokedex:
             for i, pokemon in enumerate(self.donnees_pokemon):
                 couleur = (255, 0, 0) if i == self.bouton_selectionne else (0, 0, 0)
                 nom_surface = self.police.render(pokemon["nom"], True, couleur)
-                self.fenetre.blit(nom_surface, (self.largeur - 180, 50 * i + 15))
-
-            # Afficher les informations du Pokémon sélectionné
-            if self.bouton_selectionne is not None:
-                pokemon_selectionne = self.donnees_pokemon[self.bouton_selectionne]
-                self.afficher_infos_pokemon(pokemon_selectionne)
+                self.fenetre.blit(nom_surface, (self.largeur - 700, 20 * i + 120))
 
             pygame.display.flip()
             clock.tick(60)
