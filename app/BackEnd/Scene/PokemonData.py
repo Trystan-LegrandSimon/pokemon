@@ -1,7 +1,8 @@
 # PokemonData.py
-import json
 import os
+import sys
 import random
+import json
 
 class PokemonData:
     def __init__(self, json_file):
@@ -18,3 +19,4 @@ class PokemonData:
             if pokemon_info["nom"] == name:
                 return pokemon_info
         return None
+
