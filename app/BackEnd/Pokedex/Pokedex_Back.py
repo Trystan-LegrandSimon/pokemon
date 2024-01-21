@@ -55,13 +55,28 @@ class Pokedex:
             pokemon_selectionne = self.donnees_pokemon[index_pokemon]
 
             # Position où les informations seront affichées
-            x_info = 600
-            y_info = 50
+            x_info = 550
+            y_info = 250
+            # Afficher les informations du Pokémon
+            infos_surface = self.police.render(f"Nom: {pokemon_selectionne['nom']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (x_info, y_info))
+            y_info += 30
 
-            for key, value in pokemon_selectionne.items():
-                infos_surface = self.police.render(f"{key.capitalize()}: {value}", True, (0, 0, 0))
-                self.fenetre.blit(infos_surface, (x_info, y_info))
-                y_info += 20  # Augmentez la valeur pour déplacer vers le bas
+            infos_surface = self.police.render(f"Évolution: {pokemon_selectionne['evolution']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (x_info, y_info))
+            y_info += 30
+
+            infos_surface = self.police.render(f"Attaque: {pokemon_selectionne['puissance_attaque']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (x_info, y_info))
+            y_info += 30
+
+            infos_surface = self.police.render(f"Défense: {pokemon_selectionne['defense']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (x_info, y_info))
+            y_info += 30
+
+            infos_surface = self.police.render(f"PV: {pokemon_selectionne['pv']}", True, (0, 0, 0))
+            self.fenetre.blit(infos_surface, (x_info, y_info))
+            y_info += 30
 
     def gerer_clic(self, x, y):
         # Vérifier si l'un des boutons des Pokémon a été cliqué
@@ -105,6 +120,9 @@ class Pokedex:
                 image_pokemon = pygame.image.load(chemin_image).convert()
                 image_pokemon = pygame.transform.scale(image_pokemon, (100, 100))  # Redimensionner l'image
                 self.fenetre.blit(image_pokemon, (550, 100))  # Ajuster les coordonnées x
+
+                # Afficher les informations du Pokémon en dessous de son image
+                self.afficher_infos_pokemon(self.bouton_selectionne)
 
             pygame.display.flip()
             clock.tick(60)
