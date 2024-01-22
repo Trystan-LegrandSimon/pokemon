@@ -23,10 +23,10 @@ class AjouterPokemon:
         self.informations_pokemon = {
             "nom": "",
             "evolution": "",
-            "puissance_attaque": "",
+            "puissance_attaque": "",  # Correction du nom du champ
             "defense": "",
             "pv": "",
-            "image_directory": ""
+            "asset": ""  # Correction du nom du champ
         }
 
         self.chemin_du_pokedex = chemin_du_pokedex
@@ -111,7 +111,7 @@ class AjouterPokemon:
         root.withdraw()
         file_directory = filedialog.askopenfilename(filetypes=[("PNG Images", "*.png")])
         if file_directory:
-            self.informations_pokemon["image_directory"] = file_directory
+            self.informations_pokemon["asset"] = file_directory
 
     def champ_suivant(self, champ_actuel):
         champs = list(self.champs_rects.keys())
@@ -142,7 +142,7 @@ class AjouterPokemon:
                 "puissance_attaque": self.informations_pokemon["puissance_attaque"],
                 "defense": self.informations_pokemon["defense"],
                 "pv": self.informations_pokemon["pv"],
-                "image_directory": self.informations_pokemon["image_directory"]
+                "asset": self.informations_pokemon["asset"]
             }
 
             donnees_pokemon.append(nouveau_pokemon)
