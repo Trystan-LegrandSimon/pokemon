@@ -3,6 +3,7 @@
 import pygame
 import sys
 import os
+import time
 import random
 from Pokemon import Pokemon
 from PokemonData import PokemonData
@@ -19,13 +20,13 @@ GRIS = (169, 169, 169)
 # Dimensions de la fenêtre
 largeur, hauteur = 1520, 825
 
-# Classe Bouton
 class Bouton:
-    def __init__(self, x, y, largeur, hauteur, couleur, texte, action):
+    def __init__(self, x, y, largeur, hauteur, couleur, texte, action, combat_instance):
         self.rect = pygame.Rect(x, y, largeur, hauteur)
         self.couleur = couleur
         self.texte_surface = None
         self.action = action
+        self.combat_instance = combat_instance
         self.maj_texte(texte)
 
     def maj_texte(self, texte):
@@ -38,6 +39,7 @@ class Bouton:
 
     def afficher_texte(self, ecran, texte_surface, x, y, couleur):
         ecran.blit(texte_surface, (x - texte_surface.get_width() / 2, y - texte_surface.get_height() / 2))
+
 
 # Dossier des Pokémon
 dossier_pokemon = 'app/assets/assets_pokemon'
@@ -138,13 +140,16 @@ police_info = pygame.font.Font(None, 24)
 # Création instance de combat
 combat = Combat(pokemon_1, pokemon_2)
 
-# Création des boutons
-bouton_attaque = Bouton(200, hauteur - 100, 150, 40, (255, 0, 0), "Attaque", combat.attaque)
-bouton_defense = Bouton(400, hauteur - 100, 150, 40, (0, 255, 0), "Défense", combat.defense)
+bouton_attaque = Bouton(200, hauteur - 100, 150, 40, (255, 0, 0), "Attaque", combat.attaque, combat)
+bouton_defense = Bouton(400, hauteur - 100, 150, 40, (0, 255, 0), "Défense", combat.defense, combat)
+
 
 
 # Création de l'instance de Combat
 combat = Combat(pokemon_1, pokemon_2)
+
+# Boucle principale du combat
+# ... (autre code)
 
 # Boucle principale du combat
 while True:
@@ -155,9 +160,9 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             if bouton_attaque.rect.collidepoint(x, y):
-                combat.attaque()
+                bouton_attaque.action()
             elif bouton_defense.rect.collidepoint(x, y):
-                combat.defense()
+                bouton_defense.action()
 
     ecran_combat.blit(fond_combat, (0, 0))
     pokemon_1.afficher(ecran_combat)
@@ -182,3 +187,17 @@ while True:
     pygame.display.flip()
     pygame.time.Clock().tick(30)
     combat.tour_suivant()
+
+    # Vérifiez si le combat est terminé
+    if pokemon_1.pv <= 0 or pokemon_2.pv <= 0:
+        # Affiche le gagnant pendant 5 secondes
+        gagnant_texte_surface = police_info.render(f"Le gagnant est {pokemon_1.nom}" if pokemon_1.pv > 0 else f"Le gagnant est {pokemon_2.nom}", True, BLANC)
+        ecran_combat.blit(gagnant_texte_surface, (largeur // 2 - gagnant_texte_surface.get_width() // 2, hauteur // 2 - gagnant_texte_surface.get_height() // 2))
+        pygame.display.flip()
+
+        # Attendre 5 secondes
+        pygame.time.delay(5000)
+
+        # Retourner au menu
+        os.execv(sys.executable, [sys.executable] + ["app/FrontEnd/Window/WindowBase.py"])
+

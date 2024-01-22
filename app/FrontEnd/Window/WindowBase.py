@@ -114,11 +114,16 @@ class Window:
             game.run()
         elif index == 1:
             print("Ajouter un Pokémon - Redirection vers l'ajout de Pokémon")
-            # Ajoutez ici le code pour rediriger vers l'ajout de Pokémon
+            from WindowsAjout import WindowsAjout
+            chemin_du_pokedex = 'app/data/pokemon.json'
+            ajouter_pokemon = WindowsAjout(chemin_du_pokedex)
+            ajouter_pokemon.run()
         elif index == 2:
             print("Accéder au Pokédex - Redirection vers le Pokédex")
             # Ajoutez ici le code pour rediriger vers le Pokédex
             from WindowPokedex import WindowPokedex
+            pokedex = WindowPokedex()
+            pokedex.executer()
 
     def executer(self):
         clock = pygame.time.Clock()

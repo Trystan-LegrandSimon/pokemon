@@ -10,12 +10,12 @@ WINDOW_SIZE = (400, 400)
 BUTTON_RECT = pygame.Rect(150, 350, 100, 40)
 ADD_BUTTON_RECT = pygame.Rect(150, 310, 100, 30)
 
-class AjouterPokemon:
+class WindowsAjout:
     def __init__(self, chemin_du_pokedex):
         pygame.init()
         self.window_size = WINDOW_SIZE
         self.screen = pygame.display.set_mode(self.window_size)
-        pygame.display.set_caption("Ajouter Pokémon")
+        pygame.display.set_caption("WindowsAjout")
 
         self.text_font = pygame.font.Font(None, 24)
         self.input_font = pygame.font.Font(None, 18)
@@ -153,7 +153,7 @@ class AjouterPokemon:
             pygame.quit()
             sys.exit()
 
-if __name__ == "__main__":
-    chemin_du_pokedex = 'app/data/pokemon.json'
-    ajouter_pokemon = AjouterPokemon(chemin_du_pokedex)
-    ajouter_pokemon.run()
+# if __name__ == "__main__":
+#     chemin_du_pokedex = 'app/data/pokemon.json'
+#     ajouter_pokemon = WindowsAjout(chemin_du_pokedex)
+#     ajouter_pokemon.run()
