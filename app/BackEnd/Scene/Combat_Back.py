@@ -17,17 +17,19 @@ class Combat:
             defenseur = self.pokemon1
 
         print(f"{attaquant.nom} attaque {defenseur.nom} !")
-        degats = max(attaquant.puissance_attaque - defenseur.defense, 0)  # Assurez-vous que les dégâts sont au moins zéro
-        defenseur.pv -= degats
+        
+        # Convertir les attributs pv, puissance_attaque, et defense en entiers
+        degats = max(int(attaquant.puissance_attaque) - int(defenseur.defense), 0)
+        defenseur.pv = str(max(int(defenseur.pv) - degats, 0))  # Convertir pv en entier pour effectuer la soustraction
 
         print(f"{defenseur.nom} a perdu {str(degats)} PV !")
-        print(f"{defenseur.nom} a maintenant {str(max(defenseur.pv, 0))} PV.")
+        print(f"{defenseur.nom} a maintenant {str(max(int(defenseur.pv), 0))} PV.")
 
-        if defenseur.pv <= 0:
+        if int(defenseur.pv) <= 0:
             print(f"{defenseur.nom} est KO !")
 
         # Vérifiez si un Pokémon est KO et terminez la partie si nécessaire
-        if self.pokemon1.pv <= 0 or self.pokemon2.pv <= 0:
+        if int(self.pokemon1.pv) <= 0 or int(self.pokemon2.pv) <= 0:
             print("Fin de la partie !")
             sys.exit()
 
