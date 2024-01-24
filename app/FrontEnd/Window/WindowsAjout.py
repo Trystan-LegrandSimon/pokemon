@@ -23,10 +23,10 @@ class WindowsAjout:
         self.informations_pokemon = {
             "nom": "",
             "evolution": "",
-            "puissance_attaque": "",  # Correction du nom du champ
+            "puissance_attaque": "",  
             "defense": "",
             "pv": "",
-            "asset": ""  # Correction du nom du champ
+            "asset": ""  
         }
 
         self.chemin_du_pokedex = chemin_du_pokedex

@@ -18,7 +18,7 @@ class Combat:
 
         print(f"{attaquant.nom} attaque {defenseur.nom} !")
         
-        # Convertir les attributs pv, puissance_attaque, et defense en entiers
+        # Converti les attributs pv, puissance_attaque, et defense en entiers
         degats = max(int(attaquant.puissance_attaque) - int(defenseur.defense), 0)
         defenseur.pv = str(max(int(defenseur.pv) - degats, 0))  # Convertir pv en entier pour effectuer la soustraction
 
@@ -28,7 +28,7 @@ class Combat:
         if int(defenseur.pv) <= 0:
             print(f"{defenseur.nom} est KO !")
 
-        # Vérifiez si un Pokémon est KO et terminez la partie si nécessaire
+        # Vérifi si un Pokémon est KO et terminez la partie si nécessaire
         if int(self.pokemon1.pv) <= 0 or int(self.pokemon2.pv) <= 0:
             print("Fin de la partie !")
             sys.exit()

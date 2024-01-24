@@ -135,9 +135,7 @@ pokemon_2 = Pokemon(
     pokemon_info_2["defense"]
 )
 
-# Police pour les informations
 police_info = pygame.font.Font(None, 24)
-# Création instance de combat
 combat = Combat(pokemon_1, pokemon_2)
 
 bouton_attaque = Bouton(200, hauteur - 100, 150, 40, (255, 0, 0), "Attaque", combat.attaque, combat)
@@ -185,14 +183,13 @@ while True:
     pygame.time.Clock().tick(30)
     combat.tour_suivant()
 
-    # Vérifiez si le combat est terminé
+    # Vérifie si le combat est terminé
     if int(pokemon_1.pv) <= 0 or int(pokemon_2.pv) <= 0:
         # Affiche le gagnant pendant 5 secondes
         gagnant_texte_surface = police_info.render(f"Le gagnant est {pokemon_1.nom}" if int(pokemon_1.pv) > 0 else f"Le gagnant est {pokemon_2.nom}", True, BLANC)
         ecran_combat.blit(gagnant_texte_surface, (largeur // 2 - gagnant_texte_surface.get_width() // 2, hauteur // 2 - gagnant_texte_surface.get_height() // 2))
         pygame.display.flip()
 
-        # Attendre 5 secondes
         pygame.time.delay(5000)
 
         # Retourner au menu
