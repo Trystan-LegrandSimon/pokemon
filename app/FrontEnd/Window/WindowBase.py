@@ -5,6 +5,7 @@ import pygame
 import sys
 import os
 import math
+import threading
 
 class Window:
 
@@ -15,14 +16,12 @@ class Window:
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
         pygame.display.set_caption("Menu")
         self.police = pygame.font.Font(None, 24)
-        # chemin d'accès au fond du menu
         dossier_assets = "app/assets/assets_menu"
         assets_file = "backgmenu.png"
         assets_titre = "pokemontitre.png"
         chemin_image = os.path.join(dossier_assets, assets_file)
         chemin_titre = os.path.join(dossier_assets, assets_titre)
 
-        # gestion d'erreur
         if not os.path.exists(chemin_image):
             print(f"Erreur : Le fichier image '{assets_file}' n'existe pas dans le dossier '{dossier_assets}'.")
             sys.exit()
@@ -30,6 +29,7 @@ class Window:
         self.fond = pygame.image.load(chemin_image).convert()
         self.titre = pygame.image.load(chemin_titre).convert_alpha()
         self.bordure_couleur_phase = 0
+        self.running = True 
 
     def afficher_texte(self, texte, x, y, couleur):
         texte_surface = self.police.render(texte, True, couleur)
@@ -112,26 +112,28 @@ class Window:
             from WindowGame import WindowGame
             game = WindowGame()
             game.run()
+            threading.Thread(target=self.lancer_jeu).start()
         elif index == 1:
             print("Ajouter un Pokémon - Redirection vers l'ajout de Pokémon")
             from WindowsAjout import WindowsAjout
             chemin_du_pokedex = 'app/data/pokemon.json'
             ajouter_pokemon = WindowsAjout(chemin_du_pokedex)
             ajouter_pokemon.run()
+            threading.Thread(target=self.ajouter_pokemon).start()
         elif index == 2:
             print("Accéder au Pokédex - Redirection vers le Pokédex")
             # Ajoutez ici le code pour rediriger vers le Pokédex
             from WindowPokedex import WindowPokedex
             pokedex = WindowPokedex()
             pokedex.executer()
+            threading.Thread(target=self.lancer_pokedex).start()
 
     def executer(self):
         clock = pygame.time.Clock()
-        while True:
+        while self.running:
             for evenement in pygame.event.get():
                 if evenement.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    self.running = False
                 elif evenement.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     self.traiter_clic_bouton(x, y)
@@ -143,6 +145,19 @@ class Window:
             self.afficher_titre()
             pygame.display.flip()
             clock.tick(60)
+
+        pygame.quit()
+        sys.exit()
+
+class WindowGame:
+
+    def __init__(self):
+        pygame.init()
+        # Initialisation des paramètres de la fenêtre de jeu
+
+    def run(self):
+        # Boucle principale du jeu
+        pass
 
 if __name__ == "__main__":
     menu = Window()

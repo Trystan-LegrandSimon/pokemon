@@ -147,11 +147,6 @@ bouton_defense = Bouton(400, hauteur - 100, 150, 40, (0, 255, 0), "Défense", co
 
 # Création de l'instance de Combat
 combat = Combat(pokemon_1, pokemon_2)
-
-# Boucle principale du combat
-# ... (autre code)
-
-# Boucle principale du combat
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
