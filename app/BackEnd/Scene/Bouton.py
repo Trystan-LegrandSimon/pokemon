@@ -5,10 +5,9 @@ class Bouton:
     def __init__(self, x, y, largeur, hauteur, couleur, texte, action):
         self.rect = pygame.Rect(x, y, largeur, hauteur)
         self.couleur = couleur
-        self.texte_surface = None  # Initialiser à None pour l'instant
+        self.texte_surface = None
         self.action = action
 
-        # Convertir le texte en surface dès la création du bouton
         self.maj_texte(texte)
 
     def maj_texte(self, texte):

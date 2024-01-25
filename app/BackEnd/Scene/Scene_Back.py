@@ -67,7 +67,7 @@ def selection_pokemon():
         ecran_selection.fill(GRIS)
         ecran_selection.blit(titre_surface, titre_rect)
 
-        nombre_colonnes = 4
+        nombre_colonnes = 5
         nombre_lignes = len(images_miniatures) // nombre_colonnes
 
         for i, (image_miniature, rect_miniature) in enumerate(zip(images_miniatures, rects_miniatures)):
@@ -141,29 +141,32 @@ combat = Combat(pokemon_1, pokemon_2)
 bouton_attaque = Bouton(200, hauteur - 100, 150, 40, (255, 0, 0), "Attaque", combat.attaque, combat)
 bouton_defense = Bouton(400, hauteur - 100, 150, 40, (0, 255, 0), "Défense", combat.defense, combat)
 
+combat_en_cours = True
+fin_du_combat = False
+temps_fin_combat = 0
 
-
-# Création de l'instance de Combat
-combat = Combat(pokemon_1, pokemon_2)
-
-# Boucle principale du combat
-while True:
+while combat_en_cours:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            pass
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             if bouton_attaque.rect.collidepoint(x, y):
                 bouton_attaque.action()
             elif bouton_defense.rect.collidepoint(x, y):
                 bouton_defense.action()
+            elif 600 <= x <= 800 and hauteur - 100 <= y <= hauteur - 60:
+                print("Retour au menu")
 
     ecran_combat.blit(fond_combat, (0, 0))
     pokemon_1.afficher(ecran_combat)
     pokemon_2.afficher(ecran_combat)
     bouton_attaque.afficher(ecran_combat)
     bouton_defense.afficher(ecran_combat)
+
+    pygame.draw.rect(ecran_combat, (0, 0, 255), (600, hauteur - 100, 200, 40))
+    bouton_retour_menu_texte = police_info.render("Retour au Menu", True, BLANC)
+    ecran_combat.blit(bouton_retour_menu_texte, (700 - bouton_retour_menu_texte.get_width() // 2, hauteur - 90))
 
     nom_texte_surface = police_info.render(f"Nom: {pokemon_1.nom}", True, BLANC)
     evolution_texte_surface = police_info.render(f"Évolution: {pokemon_1.evolution}" if pokemon_1.evolution else "Évolution: Aucune", True, BLANC)
@@ -180,17 +183,18 @@ while True:
     ecran_combat.blit(pv_texte_surface_2, (300, 60))
 
     pygame.display.flip()
+
+    if int(pokemon_1.pv) <= 0 or int(pokemon_2.pv) <= 0:
+        fin_du_combat = True
+
+    if fin_du_combat:
+        temps_fin_combat += 1
+        if temps_fin_combat <= 150:  # 150 frames (5 secondes à 30 FPS)
+            gagnant_texte_surface = police_info.render(f"Le gagnant est {pokemon_1.nom}" if int(pokemon_1.pv) > 0 else f"Le gagnant est {pokemon_2.nom}", True, BLANC)
+            ecran_combat.blit(gagnant_texte_surface, (largeur // 2 - gagnant_texte_surface.get_width() // 2, hauteur // 2 - gagnant_texte_surface.get_height() // 2))
+        else:
+            combat_en_cours = False  # Mettez fin au combat
+
     pygame.time.Clock().tick(30)
     combat.tour_suivant()
 
-    # Vérifie si le combat est terminé
-    if int(pokemon_1.pv) <= 0 or int(pokemon_2.pv) <= 0:
-        # Affiche le gagnant pendant 5 secondes
-        gagnant_texte_surface = police_info.render(f"Le gagnant est {pokemon_1.nom}" if int(pokemon_1.pv) > 0 else f"Le gagnant est {pokemon_2.nom}", True, BLANC)
-        ecran_combat.blit(gagnant_texte_surface, (largeur // 2 - gagnant_texte_surface.get_width() // 2, hauteur // 2 - gagnant_texte_surface.get_height() // 2))
-        pygame.display.flip()
-
-        pygame.time.delay(5000)
-
-        # Retourner au menu
-        os.execv(sys.executable, [sys.executable] + ["app/FrontEnd/Window/WindowBase.py"])
