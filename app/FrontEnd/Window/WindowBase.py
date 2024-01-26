@@ -108,19 +108,17 @@ class Window:
     def rediriger_vers_interface(self, index):
         if index == 0:
             print("Lancer une partie - Redirection vers le jeu")
-            # Ajoutez ici le code pour rediriger vers le jeu
             from WindowGame import WindowGame
             game = WindowGame()
             game.run()
         elif index == 1:
             print("Ajouter un Pokémon - Redirection vers l'ajout de Pokémon")
             from WindowsAjout import WindowsAjout
-            chemin_du_pokedex = 'app/data/pokemon.json'
-            ajouter_pokemon = WindowsAjout(chemin_du_pokedex)
+            chemin_ajout = 'app/data/pokemon.json'
+            ajouter_pokemon = WindowsAjout(chemin_ajout)
             ajouter_pokemon.run()
         elif index == 2:
             print("Accéder au Pokédex - Redirection vers le Pokédex")
-            # Ajoutez ici le code pour rediriger vers le Pokédex
             from WindowPokedex import WindowPokedex
             pokedex = WindowPokedex()
             pokedex.executer()

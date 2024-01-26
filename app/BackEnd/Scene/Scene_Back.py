@@ -8,16 +8,13 @@ import random
 from Pokemon import Pokemon
 from PokemonData import PokemonData
 from Combat_Back import Combat
-
-# Initialisation de Pygame
+sys.path.append("app/FrontEnd/Window/")
+from WindowBase import Window
 pygame.init()
 
-# Couleurs
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 GRIS = (169, 169, 169)
-
-# Dimensions de la fenêtre
 largeur, hauteur = 1520, 825
 
 class Bouton:
@@ -156,7 +153,8 @@ while combat_en_cours:
             elif bouton_defense.rect.collidepoint(x, y):
                 bouton_defense.action()
             elif 600 <= x <= 800 and hauteur - 100 <= y <= hauteur - 60:
-                print("Retour au menu")
+                menu = Window()
+                menu.executer()
 
     ecran_combat.blit(fond_combat, (0, 0))
     pokemon_1.afficher(ecran_combat)
@@ -193,7 +191,7 @@ while combat_en_cours:
             gagnant_texte_surface = police_info.render(f"Le gagnant est {pokemon_1.nom}" if int(pokemon_1.pv) > 0 else f"Le gagnant est {pokemon_2.nom}", True, BLANC)
             ecran_combat.blit(gagnant_texte_surface, (largeur // 2 - gagnant_texte_surface.get_width() // 2, hauteur // 2 - gagnant_texte_surface.get_height() // 2))
         else:
-            combat_en_cours = False  # Mettez fin au combat
+            combat_en_cours = False
 
     pygame.time.Clock().tick(30)
     combat.tour_suivant()

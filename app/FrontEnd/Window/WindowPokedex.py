@@ -41,10 +41,6 @@ class WindowPokedex:
         chemin_image = os.path.join(dossier_assets, assets_file)
         self.image_fond = pygame.image.load(chemin_image).convert()
 
-        # Définition du bouton "Menu"
-        self.MENU_BUTTON_RECT = pygame.Rect(50, 565, 100, 30)
-        self.boutons_pokemon.append(self.MENU_BUTTON_RECT)
-
     def charger_donnees_pokemon(self):
         # Charger les données Pokémon depuis le fichier JSON
         chemin_json = 'app/data/pokemon.json'
@@ -86,14 +82,10 @@ class WindowPokedex:
 
     def gerer_clic(self, x, y):
         # Vérifier si l'un des boutons des Pokémon a été cliqué
-        for i, bouton in enumerate(self.boutons_pokemon[:-1]):
+        for i, bouton in enumerate(self.boutons_pokemon):
             if bouton.collidepoint(x, y):
                 self.bouton_selectionne = i
                 self.afficher_infos_pokemon(self.bouton_selectionne)
-
-        # Vérifier le clic sur le bouton "Menu"
-        if self.boutons_pokemon[-1].collidepoint(x, y):
-            self.bouton_selectionne = None  # Réinitialiser la sélection
 
     def executer(self):
         clock = pygame.time.Clock()
@@ -123,18 +115,13 @@ class WindowPokedex:
                 nom_surface = self.police.render(pokemon["nom"], True, couleur)
                 self.fenetre.blit(nom_surface, (100, 20 * i + 100))
 
-            # Afficher le bouton "Menu"
-            pygame.draw.rect(self.fenetre, (0, 0, 0), self.MENU_BUTTON_RECT, 2)
-            menu_surface = self.police.render("Menu", True, (0, 0, 0))
-            self.fenetre.blit(menu_surface, (self.MENU_BUTTON_RECT.x + 5, self.MENU_BUTTON_RECT.y + 5))
-
             # Afficher l'image du Pokémon sélectionné (redimensionnée)
             if self.bouton_selectionne is not None:
                 pokemon_nom = self.donnees_pokemon[self.bouton_selectionne]["nom"]
                 chemin_image = self.chemin_images[pokemon_nom]
                 image_pokemon = pygame.image.load(chemin_image).convert()
-                image_pokemon = pygame.transform.scale(image_pokemon, (100, 100))
-                self.fenetre.blit(image_pokemon, (550, 100))
+                image_pokemon = pygame.transform.scale(image_pokemon, (100, 100))  # Redimensionner l'image
+                self.fenetre.blit(image_pokemon, (550, 100))  # Ajuster les coordonnées x
 
                 # Afficher les informations du Pokémon en dessous de son image
                 self.afficher_infos_pokemon(self.bouton_selectionne)
