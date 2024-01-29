@@ -4,11 +4,14 @@ import os
 import json
 import tkinter as tk
 from tkinter import filedialog
+sys.path.append("app/FrontEnd/Window/")
+from WindowBase import Window
 
 # Constantes pour les dimensions et les positions
 WINDOW_SIZE = (400, 400)
 BUTTON_RECT = pygame.Rect(150, 350, 100, 40)
 ADD_BUTTON_RECT = pygame.Rect(150, 310, 100, 30)
+RETURN_MENU_BUTTON_RECT = pygame.Rect(150, 270, 150, 30)  # New button rectangle
 
 class WindowsAjout:
     def __init__(self, chemin_du_pokedex):
@@ -23,10 +26,10 @@ class WindowsAjout:
         self.informations_pokemon = {
             "nom": "",
             "evolution": "",
-            "puissance_attaque": "",  
+            "puissance_attaque": "",
             "defense": "",
             "pv": "",
-            "asset": ""  
+            "asset": ""
         }
 
         self.chemin_du_pokedex = chemin_du_pokedex
@@ -48,6 +51,8 @@ class WindowsAjout:
                         self.ajouter_pokemon()
                     elif self.image_button_rect.collidepoint(pygame.mouse.get_pos()):
                         self.ouvrir_dialogue_image()
+                    elif RETURN_MENU_BUTTON_RECT.collidepoint(pygame.mouse.get_pos()):
+                        self.retour_au_menu()  # Call the new method
 
                 elif event.type == pygame.KEYDOWN:
                     self.gerer_saisie(event)
@@ -106,6 +111,11 @@ class WindowsAjout:
         add_button_surface = self.text_font.render("Ajouter", True, (0, 0, 0))
         self.screen.blit(add_button_surface, (ADD_BUTTON_RECT.x + 5, ADD_BUTTON_RECT.y + 5))
 
+        # Afficher le bouton "Retour au menu"
+        pygame.draw.rect(self.screen, (0, 0, 0), RETURN_MENU_BUTTON_RECT, 2)
+        return_menu_button_surface = self.text_font.render("Retour au menu", True, (0, 0, 0))
+        self.screen.blit(return_menu_button_surface, (RETURN_MENU_BUTTON_RECT.x + 5, RETURN_MENU_BUTTON_RECT.y + 5))
+
     def ouvrir_dialogue_image(self):
         root = tk.Tk()
         root.withdraw()
@@ -127,6 +137,10 @@ class WindowsAjout:
 
     def activer_saisie(self, champ):
         self.active_input = champ
+
+    def retour_au_menu(self):
+            menu = Window()
+            menu.executer()
 
     def ajouter_pokemon(self):
         if all(self.informations_pokemon.values()):
@@ -153,7 +167,7 @@ class WindowsAjout:
             pygame.quit()
             sys.exit()
 
-# if __name__ == "__main__":
-#     chemin_du_pokedex = 'app/data/pokemon.json'
-#     ajouter_pokemon = WindowsAjout(chemin_du_pokedex)
-#     ajouter_pokemon.run()
+if __name__ == "__main__":
+    chemin_du_pokedex = 'app/data/pokemon.json'
+    ajouter_pokemon = WindowsAjout(chemin_du_pokedex)
+    ajouter_pokemon.run()
