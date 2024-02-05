@@ -1,4 +1,3 @@
-# main.py
 
 import pygame
 import sys
@@ -38,10 +37,8 @@ class Bouton:
         ecran.blit(texte_surface, (x - texte_surface.get_width() / 2, y - texte_surface.get_height() / 2))
 
 
-# Dossier des Pokémon
 dossier_pokemon = 'app/assets/assets_pokemon'
 
-# Chargement des images miniatures et création des rectangles associés
 images_miniatures = []
 rects_miniatures = []
 for pokemon_info in PokemonData('app/data/pokemon.json').pokemon_data:
@@ -50,7 +47,6 @@ for pokemon_info in PokemonData('app/data/pokemon.json').pokemon_data:
     images_miniatures.append(image_miniature)
     rects_miniatures.append(image_miniature.get_rect())
 
-# Sélection du Pokémon
 def selection_pokemon():
     ecran_selection = pygame.display.set_mode((largeur, hauteur))
     pygame.display.set_caption("Sélection du Pokémon")
@@ -95,10 +91,8 @@ def selection_pokemon():
 
     return choix_pokemon
 
-# Obtention des informations d'un Pokémon au hasard
 pokemon_data = PokemonData('app/data/pokemon.json')
 
-# Sélection du premier Pokémon
 pokemon_info_1 = selection_pokemon()
 position_initiale_pokemon_1 = (largeur // 2 - 250, hauteur // 2 + 75)
 pokemon_1 = Pokemon(
@@ -113,7 +107,6 @@ pokemon_1 = Pokemon(
     pokemon_info_1["defense"]
 )
 
-# Création de la fenêtre principale du combat
 ecran_combat = pygame.display.set_mode((largeur, hauteur))
 pygame.display.set_caption("Arène Pokémon")
 fond_combat = pygame.image.load('app/assets/assets_scene/backcombat.png')
@@ -187,7 +180,7 @@ while combat_en_cours:
 
     if fin_du_combat:
         temps_fin_combat += 1
-        if temps_fin_combat <= 150:  # 150 frames (5 secondes à 30 FPS)
+        if temps_fin_combat <= 150:
             gagnant_texte_surface = police_info.render(f"Le gagnant est {pokemon_1.nom}" if int(pokemon_1.pv) > 0 else f"Le gagnant est {pokemon_2.nom}", True, BLANC)
             ecran_combat.blit(gagnant_texte_surface, (largeur // 2 - gagnant_texte_surface.get_width() // 2, hauteur // 2 - gagnant_texte_surface.get_height() // 2))
         else:

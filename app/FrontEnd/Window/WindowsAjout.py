@@ -7,7 +7,6 @@ from tkinter import filedialog
 sys.path.append("app/FrontEnd/Window/")
 from WindowBase import Window
 
-# Constantes pour les dimensions et les positions
 WINDOW_SIZE = (400, 400)
 BUTTON_RECT = pygame.Rect(150, 350, 100, 40)
 ADD_BUTTON_RECT = pygame.Rect(150, 310, 100, 30)
@@ -52,7 +51,7 @@ class WindowsAjout:
                     elif self.image_button_rect.collidepoint(pygame.mouse.get_pos()):
                         self.ouvrir_dialogue_image()
                     elif RETURN_MENU_BUTTON_RECT.collidepoint(pygame.mouse.get_pos()):
-                        self.retour_au_menu()  # Call the new method
+                        self.retour_au_menu()
 
                 elif event.type == pygame.KEYDOWN:
                     self.gerer_saisie(event)
@@ -96,22 +95,18 @@ class WindowsAjout:
             saisie_surface = self.input_font.render(self.informations_pokemon[champ], True, (0, 0, 0))
             self.screen.blit(saisie_surface, (rect.x + 5, rect.y + 5))
 
-        # Afficher le bouton pour ajouter une image
         pygame.draw.rect(self.screen, (0, 0, 0), self.image_button_rect, 2)
         image_button_surface = self.text_font.render("Ajouter une Image", True, (0, 0, 0))
         self.screen.blit(image_button_surface, (self.image_button_rect.x + 5, self.image_button_rect.y + 5))
 
-        # Afficher le bouton d'ajout
         pygame.draw.rect(self.screen, (0, 0, 0), BUTTON_RECT, 2)
         bouton_surface = self.text_font.render("Ajouter", True, (0, 0, 0))
         self.screen.blit(bouton_surface, (BUTTON_RECT.x + 5, BUTTON_RECT.y + 5))
 
-        # Afficher le bouton "Ajouter"
         pygame.draw.rect(self.screen, (0, 0, 0), ADD_BUTTON_RECT, 2)
         add_button_surface = self.text_font.render("Ajouter", True, (0, 0, 0))
         self.screen.blit(add_button_surface, (ADD_BUTTON_RECT.x + 5, ADD_BUTTON_RECT.y + 5))
 
-        # Afficher le bouton "Retour au menu"
         pygame.draw.rect(self.screen, (0, 0, 0), RETURN_MENU_BUTTON_RECT, 2)
         return_menu_button_surface = self.text_font.render("Retour au menu", True, (0, 0, 0))
         self.screen.blit(return_menu_button_surface, (RETURN_MENU_BUTTON_RECT.x + 5, RETURN_MENU_BUTTON_RECT.y + 5))
