@@ -146,17 +146,3 @@ class Window:
 
         pygame.quit()
         sys.exit()
-
-class WindowGame:
-
-    def __init__(self):
-        pygame.init()
-        # Initialisation des paramètres de la fenêtre de jeu
-
-    def run(self):
-        # Boucle principale du jeu
-        pass
-
-if __name__ == "__main__":
-    menu = Window()
-    menu.executer()
